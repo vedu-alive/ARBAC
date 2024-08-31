@@ -1,0 +1,19 @@
+.header-search{
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #F1EEEE;
+    height: 2.25rem;
+    width: 21.6875rem;
+    background: rgba(194, 207, 224, 0.12);
+}
+.headerComponent{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--white, #FFF);
+    height: 3.75rem;
+}
+.header-rightt-btns{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}

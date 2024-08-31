@@ -1,0 +1,30 @@
+.table-app-name{
+    display: flex;
+    align-items: center;
+    gap: 0.5rem
+}
+.selected-app-table{
+    margin: 0 0.25rem;
+    max-width: 36rem;
+}
+.table-app-icon{
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 0.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.ms-office-icon {
+    width: 2.275rem;
+    height: 1.5rem;
+}
+.ms-office-icon svg{
+    position: relative;
+    top: -15%;
+    left: -18%;
+}
+.ms-office-name{
+    position: relative;
+    left: -8%;
+}

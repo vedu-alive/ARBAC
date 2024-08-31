@@ -1,0 +1,23 @@
+.layout{
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+.layout-sidebar{
+    position: relative;
+    width: 16rem;
+    box-shadow: 6px 0px 18px 0px rgba(0, 0, 0, 0.06);
+    z-index: 1;
+}
+.layout-mainBody{
+    position: relative;
+    flex:1;
+}
+.layout-displayarea{
+    padding: 0.5rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    max-height: 92.075vh;
+    overflow: scroll;
+}

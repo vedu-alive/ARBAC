@@ -1,0 +1,7 @@
+.tabComponent.ant-tabs .ant-tabs-nav .ant-tabs-nav-wrap{
+    transform: translate(1.63rem, 0);
+}
+.tabComponent.ant-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn{
+    color: #0690E3;
+    border-bottom: #0958F3;
+}

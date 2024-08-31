@@ -1,0 +1,10 @@
+.breadcrumb-typo{
+    color: #192A3E;
+    font-family: Montserrat;
+    font-size: 0.8125rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 1.5rem;
+    text-transform: capitalize;
+    cursor: pointer;
+}
