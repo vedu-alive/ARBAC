@@ -5,31 +5,32 @@ import { useState } from "react";
 import DeleteIcon from "../../../assets/deleteIcon.svg"
 import EditIcon from "../../../assets/editIcon.svg"
 import './UsersTab.css'
+import { accountType, userTableType } from "../../../types";
 
-const dataSource = [
-    {
-        key: "1",
-        account: {
-            avatar: "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png",
-            name: "Ravi Teja",
-            email: "raviteja@gmail.com",
-        },
-        role: "employee",
-        designation: "sr software developer",
-        permissions: ["confluence", "figma", "Slack", "hubspot", "adobe", "github"],
-        groups: ["developer-design"],
-        created: new Date().toLocaleDateString(),
-        
+const dataSource: userTableType[] = [
+  {
+    key: "1",
+    account: {
+      avatar:
+        "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png",
+      name: "Ravi Teja",
+      email: "raviteja@gmail.com",
     },
+    role: "employee",
+    designation: "sr software developer",
+    permissions: ["confluence", "figma", "Slack", "hubspot", "adobe", "github"],
+    groups: ["developer-design"],
+    created: new Date().toLocaleDateString(),
+  },
 ];
 
 const UsersTab = () => {
     const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-    const columns: ColumnType<unknown>[] = [
+    const columns: ColumnType<userTableType>[] = [
       {
         title: <span className="table-header-label">Account</span>,
         dataIndex: "account",
-        render: (account: unknown) => (
+        render: (account: accountType) => (
           <div className="account">
             <Avatar src={account.avatar} alt={account.name} />
             <div className="account-details">

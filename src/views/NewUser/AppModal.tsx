@@ -2,77 +2,18 @@ import { Button, Checkbox, Input, Radio } from "antd";
 import { SetStateAction, useState } from "react";
 import CrossIcon from "../../assets/crossIcon.svg";
 import SearchIcon from "../../assets/searchIcon.svg";
-import SlackIcon from "../../assets/slackLogo.svg";
-import FigmaIcon from "../../assets/figmaLogo.svg";
-import ConfluenceIcon from "../../assets/conflenceLogo.svg";
-import MSOfficeIcon from "../../assets/MSOfficeLogo.svg";
 import OpenInNewIcon from "../../assets/OpenInNewIcon.svg";
 import InfoIcon from "../../assets/infoIcon.svg";
 import './NewUser.css'
 import SelectedAppsTable from "./SelectedAppsTable";
+import { apps, manuelPermissions } from "../../mock";
 
 type Props = {
   isModalOpen: boolean;
   setIsModalOpen: (x: SetStateAction<boolean>) => void;
 };
 
-const apps = [
-  {
-    id: "app1",
-    name: "Slack",
-    icon: <SlackIcon />,
-    description:
-      "Collaborate seamlessly with Slack. Share files, make calls, and stay organized with threaded conversations and custom notifications - anywhere.",
-    status: "Active",
-  },
-  {
-    id: "app2",
-    name: "Figma",
-    icon: <FigmaIcon />,
-    description:
-      "Collaborate seamlessly with Slack. Share files, make calls, and stay organized with threaded conversations and custom notifications - anywhere.",
-    status: "Active",
-  },
-  {
-    id: "app3",
-    name: "Confluence",
-    icon: <ConfluenceIcon />,
-    description:
-      "Collaborate seamlessly with Slack. Share files, make calls, and stay organized with threaded conversations and custom notifications - anywhere.",
-    status: "Inactive",
-  },
-  {
-    id: "app4",
-    name: "Microsoft Office 365",
-    icon: <MSOfficeIcon />,
-    description:
-      "Collaborate seamlessly with Slack. Share files, make calls, and stay organized with threaded conversations and custom notifications - anywhere.",
-    status: "Inactive",
-  },
-];
 
-const manuelPermissions = [
-  {
-    id: "view",
-    name: "View-Only",
-  },
-  {
-    id: "edit",
-    name: "Edit",
-  },
-  {
-    id: "approve",
-    name: "Approve",
-  },
-  {
-    id: "manage",
-    name: "Manage",
-  },
-  {
-    id: "delete",
-    name: "Delete",
-  },
-];
 
 const Btns = () => {
   return (

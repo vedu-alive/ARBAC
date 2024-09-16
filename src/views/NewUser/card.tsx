@@ -1,31 +1,41 @@
-import { useState } from 'react';
-import './NewUser.css';
-import { Checkbox } from 'antd';
+import { Dispatch, useEffect, useState } from "react";
+import "./NewUser.css";
+import { Checkbox } from "antd";
+import { Values } from "../../constants/enums";
 
 type Props = {
-    selectedOptions: string[];
-    title: string;
-    description: string;
-    label: string;
-    icon: JSX.Element;
-    id: string;
+  selectedOptions: Values | undefined;
+  setSelectedOptions: Dispatch<React.SetStateAction<Values>>;
+  title: string;
+  description: string;
+  label: string;
+  icon: JSX.Element;
+  id: Values.createType | Values.inviteType;
 };
 
-const Card = ({ description, icon, label, selectedOptions, title, id }: Props) => {
-    const [selected, setSelected] = useState(false);
-    const handleCardClick = () => {
-        if (selectedOptions.includes(id)) {
-            const index = selectedOptions.indexOf(id);
-            selectedOptions.splice(index, 1);
-            setSelected(false);
-        } else {
-            selectedOptions.push(id);
-            setSelected(true);
-        }
-    };
-    
+const Card = ({
+  description,
+  icon,
+  label,
+  selectedOptions,
+  title,
+  id,
+  setSelectedOptions,
+}: Props) => {
+  const [selected, setSelected] = useState(false);
+  const handleCardClick = () => {
+    setSelectedOptions(id);
+  };
+  useEffect(() => {
+    if (selectedOptions === id) {
+      setSelected(true);
+    } else {
+      setSelected(false);
+    }
+  }, [selectedOptions, id]);
+
   return (
-    <div className={`card ${selected && "selected"}` } onClick={handleCardClick}>
+    <div className={`card ${selected && "selected"}`} onClick={handleCardClick}>
       <div>
         {icon}
         <p>{title}</p>
@@ -35,6 +45,6 @@ const Card = ({ description, icon, label, selectedOptions, title, id }: Props) =
       <div>{label}</div>
     </div>
   );
-}
+};
 
 export default Card;

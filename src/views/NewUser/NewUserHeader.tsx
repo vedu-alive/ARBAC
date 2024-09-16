@@ -5,15 +5,22 @@ import StepperOneActiveIcon from '../../assets/stepperOneIconActive.svg';
 import StepperTwoIcon from '../../assets/stepperTwo.svg';
 import StepperTwoActiveIcon from '../../assets/stepperTwoActive.svg';
 import './NewUser.css';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../../types';
+import { reset } from '../../redux/slices/Administration/users';
 type NewUserHeaderProps = {
   current: number;
   setCurrent: (value: React.SetStateAction<number>) => void;
 };
 const NewUserHeader = ({current,setCurrent}:NewUserHeaderProps) => {
-    const nav = useNavigate();
+  const nav = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
   return (
     <div className="newUser-header">
-      <div className="newUserHeader-back" onClick={() => nav(-1)}>
+      <div className="newUserHeader-back" onClick={() => {
+        dispatch(reset());
+        nav(-1);
+      }}>
         <LeftArrowIcon />
         {"Back to User management"}
       </div>
