@@ -4,64 +4,64 @@ import ConfluenceIcon from "../assets/conflenceLogo.svg";
 import MSOfficeIcon from "../assets/MSOfficeLogo.svg";
 import CreateUserIcon from "../assets/createUser.svg";
 import InviteUser from "../assets/inviteUser.svg";
-import { Values } from "../constants/enums";
+import { AppPermissions, Apps, AppStatus, Values } from "../constants/enums";
 import { SelectProps } from "antd";
-import { CardOptionsTypes } from "../types";
+import { appsListType, CardOptionsTypes, SelectedAppTableData } from "../types";
 
-export const apps = [
+export const appsList: appsListType[] = [
   {
-    id: "app1",
+    id: Apps.slack,
     name: "Slack",
     icon: <SlackIcon />,
     description:
       "Collaborate seamlessly with Slack. Share files, make calls, and stay organized with threaded conversations and custom notifications - anywhere.",
-    status: "Active",
+    status: AppStatus.active,
   },
   {
-    id: "app2",
+    id: Apps.figma,
     name: "Figma",
     icon: <FigmaIcon />,
     description:
       "Collaborate seamlessly with Slack. Share files, make calls, and stay organized with threaded conversations and custom notifications - anywhere.",
-    status: "Active",
+    status: AppStatus.active,
   },
   {
-    id: "app3",
+    id: Apps.confluence,
     name: "Confluence",
     icon: <ConfluenceIcon />,
     description:
       "Collaborate seamlessly with Slack. Share files, make calls, and stay organized with threaded conversations and custom notifications - anywhere.",
-    status: "Inactive",
+    status: AppStatus.inactive,
   },
   {
-    id: "app4",
+    id: Apps.msOffice,
     name: "Microsoft Office 365",
     icon: <MSOfficeIcon />,
     description:
       "Collaborate seamlessly with Slack. Share files, make calls, and stay organized with threaded conversations and custom notifications - anywhere.",
-    status: "Inactive",
+    status: AppStatus.inactive,
   },
 ];
 
 export const manuelPermissions = [
   {
-    id: "view",
+    id: AppPermissions.view,
     name: "View-Only",
   },
   {
-    id: "edit",
+    id: AppPermissions.edit,
     name: "Edit",
   },
   {
-    id: "approve",
+    id: AppPermissions.approve,
     name: "Approve",
   },
   {
-    id: "manage",
+    id: AppPermissions.manage,
     name: "Manage",
   },
   {
-    id: "delete",
+    id: AppPermissions.delete,
     name: "Delete",
   },
 ];
@@ -115,4 +115,38 @@ export const rolesOptions:SelectProps["options"] = [
   { label: 'Content Writer', value: 'Content Writer'},
   { label: "IT-Vendor", value: "IT-Vendor" },
   { label: "Intern", value: "Intern" },
+];
+
+export const Icons = {
+  slack: <SlackIcon />,
+  figma: <FigmaIcon />,
+  confluence: <ConfluenceIcon />,
+  msOffice: <MSOfficeIcon />,
+};
+
+export const selectedApplsTableData:SelectedAppTableData[] = [
+      {
+        key: Apps.slack,
+        application: { name: "Slack", icon: <SlackIcon /> },
+        attachedPolicy: "Default",
+        permissions: ["View-Only", "Edit"],
+      },
+      {
+        key: Apps.figma,
+        application: { name: "Figma", icon: <FigmaIcon /> },
+        attachedPolicy: "Default",
+        permissions: ["View-Only", "Edit"],
+      },
+      {
+        key: Apps.confluence,
+        application: { name: "Confluence", icon: <ConfluenceIcon /> },
+        attachedPolicy: "Default",
+        permissions: ["View-Only", "Edit"],
+      },
+      {
+        key: Apps.msOffice,
+        application: { name: "Microsoft Office 365", icon: <MSOfficeIcon /> },
+        attachedPolicy: "Default",
+        permissions: ["View-Only", "Edit"],
+      },
 ];

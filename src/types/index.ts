@@ -1,5 +1,5 @@
 import { Key } from "react";
-import { Values } from "../constants/enums";
+import { AppPermissions, AppStatus, Values } from "../constants/enums";
 import store from "../redux/store";
 
 
@@ -42,4 +42,19 @@ export type CardOptionsTypes = {
     description: string,
     label: string,
     icon: JSX.Element,
+}
+
+export type SelectedAppTableData = {
+    key: Key,
+    application: { icon: JSX.Element, name: string },
+    attachedPolicy: string,
+    permissions: AppPermissions[],
+}
+
+export type appsListType = {
+    id: Key,
+    name: string,
+    icon: JSX.Element,
+    description: string,
+    status: AppStatus.active | AppStatus.inactive | AppStatus.all,
 }

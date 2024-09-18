@@ -6,6 +6,7 @@
 .selected-app-table{
     margin: 0 0.25rem;
     max-width: 36rem;
+    min-height: 13rem;
 }
 .table-app-icon{
     width: 1.5rem;

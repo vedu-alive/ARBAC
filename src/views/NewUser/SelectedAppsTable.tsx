@@ -1,23 +1,54 @@
-import { Table } from 'antd';
-import SlackIcon from "../../assets/slackLogo.svg";
-import FigmaIcon from "../../assets/figmaLogo.svg";
-import ConfluenceIcon from "../../assets/conflenceLogo.svg";
-import MSOfficeIcon from "../../assets/MSOfficeLogo.svg";
-import { ReactNode } from 'react';
+import { Flex, Table } from 'antd';
+import { ReactNode, useMemo } from 'react';
 import { ColumnType } from 'antd/es/table';
 import './SelectedAppTable.css';
+import { Icons } from '../../mock';
+import { SelectedAppTableData } from '../../types';
+import { AppPermissions } from '../../constants/enums';
 
 type Props = {
-    setSelectedRowKeys: (value: React.SetStateAction<React.Key[]>) => void;
-    selectedRowKeys: React.Key[];
+  setSelectedRowKeys: (value: React.SetStateAction<React.Key[]>) => void;
+  selectedRowKeys: React.Key[];
+  selectedApps: string[];
+  selectedPermissions: AppPermissions[];
+  setSelectedRowData: (value: React.SetStateAction<SelectedAppTableData | null>) => void;
 };
 
-const SelectedAppsTable = ({selectedRowKeys,setSelectedRowKeys}: Props) => {
-    const columns: ColumnType<any>[] = [
+const permissionsArray = {
+  [AppPermissions.approve]: "Approve",
+  [AppPermissions.delete]: "Delete",
+  [AppPermissions.edit]: "Edit",
+  [AppPermissions.manage]: "Manage",
+  [AppPermissions.view]: "View-Only",
+};
+
+const Tag = ({ text }: { text: string }) => {
+  return <span className={text}>{text}</span>;
+};
+
+const SelectedAppsTable = ({ selectedRowKeys, setSelectedRowKeys, selectedApps, selectedPermissions,setSelectedRowData }: Props) => {
+
+  const tableData: SelectedAppTableData[] = useMemo(() => {
+    return selectedApps.map((item) => {
+      return {
+        key: item,
+        application: {
+          icon: Icons[item as keyof typeof Icons],
+          name: item,
+        },
+        //* need to change these 2 values
+        attachedPolicy: "Default",
+        permissions: selectedPermissions.map((permission) => permissionsArray[permission]) as AppPermissions[],
+      };
+    });
+  }, [selectedApps, selectedPermissions]);
+  
+    const columns: ColumnType<SelectedAppTableData>[] = [
       {
         title: "Application",
         dataIndex: "application",
         key: "appName",
+        width: "auto",
         render: (value: { icon: ReactNode; name: string }) => {
           return (
             <div className="table-app-name">
@@ -43,61 +74,45 @@ const SelectedAppsTable = ({selectedRowKeys,setSelectedRowKeys}: Props) => {
         title: "Attached Policy",
         dataIndex: "attachedPolicy",
         key: "attachedPolicy",
+        ellipsis: true,
+        width: "auto",
       },
       {
         title: "Permissions",
         dataIndex: "permissions",
         key: "permissions",
+        width: "45%",
         render: (val: string[]) => {
-          return val.map((item,i) => <span key={i}>{item + ", "}</span>);
+          return (
+            <Flex align='center' gap={'4px'} wrap='wrap' >
+              {val.map((item, i) => (
+                <Tag key={i} text={item} />
+              ))}
+            </Flex>
+          );
         },
       },
     ];
 
-    const dataSource = [
-      {
-        key: "1",
-        application: { name: "Slack", icon: <SlackIcon /> },
-        attachedPolicy: "Default",
-        permissions: ["View-Only", "Edit"],
-      },
-      {
-        key: "2",
-        application: { name: "Figma", icon: <FigmaIcon /> },
-        attachedPolicy: "Default",
-        permissions: ["View-Only", "Edit"],
-      },
-      {
-        key: "3",
-        application: { name: "Confluence", icon: <ConfluenceIcon /> },
-        attachedPolicy: "Default",
-        permissions: ["View-Only", "Edit"],
-      },
-      {
-        key: "4",
-        application: { name: "Microsoft Office 365", icon: <MSOfficeIcon /> },
-        attachedPolicy: "Default",
-        permissions: ["View-Only", "Edit"],
-      },
-    ];
-
-    const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
-        console.log("selectedRowKeys changed: ", newSelectedRowKeys);
-        setSelectedRowKeys(newSelectedRowKeys);
+    const onSelectChange = (
+      newSelectedRowKeys: React.Key[],
+    ) => {
+      setSelectedRowKeys(newSelectedRowKeys);
     };
 
     const rowSelection = {
         selectedRowKeys,
         onChange: onSelectChange,
     };
+  
   return (
     <Table
-      rootClassName='selected-app-table'
+      rootClassName="selected-app-table"
       rowSelection={rowSelection}
       rowKey={(record) => record.key}
       columns={columns}
       scroll={{ y: 150 }}
-      dataSource={dataSource}
+      dataSource={tableData}
       pagination={false}
     />
   );

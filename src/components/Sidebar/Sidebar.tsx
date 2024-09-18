@@ -26,8 +26,8 @@ const Sidebar = () => {
       <section className="administartor">
         <Avatar className="admin-avatar" />
         <div className="administartor-data">
-          <span className="admin-name-typo">Gaurav Shrivastava</span>
-          <span className="admin-mail-typo">gaurav@acme.com</span>
+          <span className="admin-name-typo">Admin</span>
+          <span className="admin-mail-typo">admin@acme.com</span>
           <span className="admin-role-typo">Administrator</span>
         </div>
       </section>

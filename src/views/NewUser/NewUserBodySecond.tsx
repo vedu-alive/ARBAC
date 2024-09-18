@@ -11,7 +11,7 @@ import { inviteGroup, rolesOptions } from '../../mock';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../types';
-import { reset, setPermissions, setUserDetails } from '../../redux/slices/Administration/users';
+import { reset, setPermissions } from '../../redux/slices/Administration/users';
 type Props = {
   current: number;
   setCurrent: (current: number) => void;
@@ -54,11 +54,11 @@ const NewUserBodySecond = ({ current, setCurrent }: Props) => {
     setNewGroupName("");
   };
 
-  const handleFormSubmit = ((values:any) => {
+  const handleFormSubmit = ((values:{group:string[], role:string}) => {
     console.log(values, "formValues");
     dispatch(setPermissions({
-      group: values.group,
-      role: values.role,
+      group: values?.group,
+      role: values?.role,
       application: null
     }));
 
@@ -101,7 +101,7 @@ const NewUserBodySecond = ({ current, setCurrent }: Props) => {
             )}
           />
         </Form.Item>
-        <Form.Item label={"Select Role"}>
+        <Form.Item label={"Select Role"} name={'role'}>
           <Select
             options={roleItems}
             dropdownRender={(menu) => (
@@ -130,7 +130,7 @@ const NewUserBodySecond = ({ current, setCurrent }: Props) => {
           />
         </Form.Item>
         <p className="second-userBody-headings">{"Assign Application"}</p>
-        <Form.Item label={"Select Application (Optional)"} name={'role'}>
+        <Form.Item label={"Select Application (Optional)"}>
           <div className="select-app-div" onClick={() => setIsModalOpen(true)}>
             <AddIcon />
             {"Click here to set Application permission"}
