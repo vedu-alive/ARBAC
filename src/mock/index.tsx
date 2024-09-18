@@ -66,7 +66,7 @@ export const manuelPermissions = [
   },
 ];
 
-export const cardOptions:CardOptionsTypes[] = [
+export const cardOptions: CardOptionsTypes[] = [
   {
     id: Values.createType,
     name: "Create user",
@@ -98,21 +98,21 @@ export const departmentOptions: SelectProps["options"] = [
 ];
 
 export const inviteGroup: SelectProps["options"] = [
-  {label: 'Voyage',value: "voyage"},
-  {label: "Platform Nx",value: 'platformNx'},
-  {label: "Error Nx",value: 'errorNx'},
-  {label: "Engage",value: 'engage'}
+  { label: "Voyage", value: "voyage" },
+  { label: "Platform Nx", value: "platformNx" },
+  { label: "Error Nx", value: "errorNx" },
+  { label: "Engage", value: "engage" },
 ];
 
-export const rolesOptions:SelectProps["options"] = [
+export const rolesOptions: SelectProps["options"] = [
   { label: "Product Analyst", value: "Product Analyst" },
   { label: "Sr Software Engineer", value: "Sr Software Engineer" },
   { label: "Jr Software Engineer", value: "Jr Software Engineer" },
-  { label: "Tech Lead", value: 'techLead' },
-  { label: "QA", value: "QA"},
-  { label: 'Product Manager', value: "Product Manager" },
-  { label: "Product Owner", value: 'Product Owner' },
-  { label: 'Content Writer', value: 'Content Writer'},
+  { label: "Tech Lead", value: "techLead" },
+  { label: "QA", value: "QA" },
+  { label: "Product Manager", value: "Product Manager" },
+  { label: "Product Owner", value: "Product Owner" },
+  { label: "Content Writer", value: "Content Writer" },
   { label: "IT-Vendor", value: "IT-Vendor" },
   { label: "Intern", value: "Intern" },
 ];
@@ -124,29 +124,29 @@ export const Icons = {
   msOffice: <MSOfficeIcon />,
 };
 
-export const selectedApplsTableData:SelectedAppTableData[] = [
-      {
-        key: Apps.slack,
-        application: { name: "Slack", icon: <SlackIcon /> },
-        attachedPolicy: "Default",
-        permissions: ["View-Only", "Edit"],
-      },
-      {
-        key: Apps.figma,
-        application: { name: "Figma", icon: <FigmaIcon /> },
-        attachedPolicy: "Default",
-        permissions: ["View-Only", "Edit"],
-      },
-      {
-        key: Apps.confluence,
-        application: { name: "Confluence", icon: <ConfluenceIcon /> },
-        attachedPolicy: "Default",
-        permissions: ["View-Only", "Edit"],
-      },
-      {
-        key: Apps.msOffice,
-        application: { name: "Microsoft Office 365", icon: <MSOfficeIcon /> },
-        attachedPolicy: "Default",
-        permissions: ["View-Only", "Edit"],
-      },
+export const selectedApplsTableData: SelectedAppTableData[] = [
+  {
+    key: Apps.slack,
+    application: { name: "Slack", icon: <SlackIcon /> },
+    attachedPolicy: "Default",
+    permissions: [AppPermissions.view, AppPermissions.edit],
+  },
+  {
+    key: Apps.figma,
+    application: { name: "Figma", icon: <FigmaIcon /> },
+    attachedPolicy: "Default",
+    permissions: [AppPermissions.view, AppPermissions.edit],
+  },
+  {
+    key: Apps.confluence,
+    application: { name: "Confluence", icon: <ConfluenceIcon /> },
+    attachedPolicy: "Default",
+    permissions: [AppPermissions.view, AppPermissions.edit],
+  },
+  {
+    key: Apps.msOffice,
+    application: { name: "Microsoft Office 365", icon: <MSOfficeIcon /> },
+    attachedPolicy: "Default",
+    permissions: [AppPermissions.view, AppPermissions.edit],
+  },
 ];
