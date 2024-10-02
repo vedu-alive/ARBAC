@@ -49,21 +49,25 @@
     width: 1.25rem;
     height: 1.25rem;
 }
-/* Table */
+/** Table */
 .userTable{
     margin-top: 1rem;
     padding-left: 2px;
+    position: relative;
+    z-index: 1;
 }
 .actions{
     display: flex;
     align-items: center;
     gap: 1rem;
+    cursor: pointer;
 }
 .ant-table-wrapper.userTable table tr td.ant-table-selection-column, .userTable.ant-table-wrapper .ant-table-selection-column{
     padding: 1rem;
 }
 .ant-table-wrapper.userTable .ant-table-tbody >tr >td{
     padding: 1rem 0 1rem 1rem;
+    color: var(--Secondary-Table-gray, #707683);
 }
 .actions span:hover{
     border-radius: 0.125rem;
@@ -96,8 +100,9 @@
     font-size: 0.9375rem;
     font-style: normal;
     font-weight: 500;
-    line-height: 1.5rem; /* 160% */
+    line-height: 1.5rem;
     letter-spacing: 0.00938rem;
+    
 }
 .account{
     display: flex;
@@ -134,4 +139,36 @@
     font-weight: 400;
     line-height: 1.5rem;
     letter-spacing: 0.00813rem;
+}
+.permission-icon-container{
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    background-color: #ebf7ff;
+}
+.app-permission-tooltip.ant-tooltip .ant-tooltip-inner{
+    background-color: #fff;
+    font-family: Poppins !important;
+}
+.table-group{
+    border-radius: 4px;
+    padding: 4px 12px;
+    text-wrap: nowrap;
+    background-color: #F5F5F5;
+}
+.app-permission-tooltip.ant-tooltip .ant-tooltip-content{
+    width: fit-content;
+}
+.table-group-tooltip{
+    color: var(--Secondary-Table-gray, #707683);
+    border-radius: 4px;
+    padding: 4px 12px;
+    background-color: #F5F5F5;
+    text-wrap: nowrap;
+}
+.app-permission-menu.ant-menu-horizontal{
+    border: none;
+}
+.app-permission-menu.ant-menu-light.ant-menu-horizontal >.ant-menu-submenu::after{
+    border:none;
 }

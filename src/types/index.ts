@@ -1,6 +1,6 @@
 import { Key } from "react";
 import { AppPermissions, AppStatus, Values } from "../constants/enums";
-import store from "../redux/store";
+import store from "@/redux/store";
 
 
 export type RootState = ReturnType<typeof store.getState>;
@@ -26,6 +26,7 @@ export type accountType = {
     name: string;
     email: string;
 }
+
 export type userTableType = {
     key: Key,
     account: accountType,

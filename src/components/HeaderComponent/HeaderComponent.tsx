@@ -1,8 +1,8 @@
 import { Input } from 'antd';
 import './HeaderComponent.css';
-import SearchIcon from "../../assets/dashboardSearchIcon.svg";
-import NotificationIcon from "../../assets/NotificationIcon.svg";
-import HelpIcon from "../../assets/helpIcon.svg";
+import SearchIcon from "@/assets/dashboardSearchIcon.svg";
+import NotificationIcon from "@/assets/NotificationIcon.svg";
+import HelpIcon from "@/assets/helpIcon.svg";
 const HeaderComponent = () => {
     return (
       <div className="headerComponent">

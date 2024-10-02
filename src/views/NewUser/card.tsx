@@ -1,7 +1,7 @@
 import { Dispatch, useEffect, useState } from "react";
 import "./NewUser.css";
 import { Checkbox } from "antd";
-import { Values } from "../../constants/enums";
+import { Values } from "@/constants/enums";
 
 type Props = {
   selectedOptions: Values | undefined;

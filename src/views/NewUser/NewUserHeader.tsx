@@ -1,13 +1,13 @@
 import { useNavigate } from 'react-router-dom';
-import LeftArrowIcon from '../../assets/arrowLeftIcon.svg';
-import StepperDoneIcon from '../../assets/stepperDone.svg';
-import StepperOneActiveIcon from '../../assets/stepperOneIconActive.svg';
-import StepperTwoIcon from '../../assets/stepperTwo.svg';
-import StepperTwoActiveIcon from '../../assets/stepperTwoActive.svg';
+import LeftArrowIcon from '@/assets/arrowLeftIcon.svg';
+import StepperDoneIcon from '@/assets/stepperDone.svg';
+import StepperOneActiveIcon from '@/assets/stepperOneIconActive.svg';
+import StepperTwoIcon from '@/assets/stepperTwo.svg';
+import StepperTwoActiveIcon from '@/assets/stepperTwoActive.svg';
 import './NewUser.css';
 import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../../types';
-import { reset } from '../../redux/slices/Administration/users';
+import { AppDispatch } from '@/types';
+import { reset } from '@/redux/slices/Administration/users';
 type NewUserHeaderProps = {
   current: number;
   setCurrent: (value: React.SetStateAction<number>) => void;

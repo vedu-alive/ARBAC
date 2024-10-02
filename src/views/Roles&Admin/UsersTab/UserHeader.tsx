@@ -1,7 +1,7 @@
 import { Button, Input } from "antd"
-import SearchIcon from '../../../assets/dashboardSearchIcon.svg'
-import FilterIcon from '../../../assets/filterIcon.svg'
-import AddIcon from "../../../assets/addIcon.svg";
+import SearchIcon from '@/assets/dashboardSearchIcon.svg'
+import FilterIcon from '@/assets/filterIcon.svg'
+import AddIcon from "@/assets/addIcon.svg";
 import './UsersTab.css';
 import { useNavigate } from "react-router-dom";
 const UserHeader = () => {

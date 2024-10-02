@@ -1,19 +1,52 @@
 import './Sidebar.css';
-import Logo from "../../assets/logo.svg";
+import Logo from "@/assets/logo.svg";
 import { Avatar } from 'antd';
-import DashboardIcon from '../../assets/dashboardIcon.svg';
-import RoleIcon from '../../assets/application&roleIcon.svg';
-import PolicyIcon from '../../assets/policyICon.svg';
-import IdentityIcon from '../../assets/identityIcon.svg';
-import CredentialIcon from '../../assets/credentialIcon.svg';
-import GovernanceIcon from '../../assets/governanceIcon.svg';
-import RoleManagementIcon from '../../assets/roles&adminIcon.svg';
-import SettingsIcon from '../../assets/settings.svg';
-import { useState } from 'react';
+import DashboardIcon from '@/assets/dashboardIcon.svg';
+import RoleIcon from '@/assets/application&roleIcon.svg';
+import PolicyIcon from '@/assets/policyICon.svg';
+import IdentityIcon from '@/assets/identityIcon.svg';
+import CredentialIcon from '@/assets/credentialIcon.svg';
+import GovernanceIcon from '@/assets/governanceIcon.svg';
+import RoleManagementIcon from '@/assets/roles&adminIcon.svg';
+import SettingsIcon from '@/assets/settings.svg';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 const Sidebar = () => {
   const [active, setActive] = useState("");
   const navigate = useNavigate();
+
+  // set active class based on the current path
+  useEffect(() => {
+    const path = window.location.pathname.split("/")[1];
+    switch (path) {
+      case "dashboard":
+        setActive("dashboard");
+        break;
+      case "role-administration":
+        setActive("role & administration");
+        break;
+      case "app-management":
+        setActive("app management");
+        break;
+      case "policy-management":
+        setActive("policy management");
+        break;
+      case "identity-providers":
+        setActive("identity providers");
+        break;
+      case "credentials-reports":
+        setActive("credentials reports");
+        break;
+      case "identity-governance":
+        setActive("identityGovernance");
+        break;
+      case "settings":
+        setActive("settings");
+        break;
+      default:
+        setActive("dashboard");
+    }
+  },[])
   return (
     <div className="sidebar">
       <section className="productName">
@@ -78,9 +111,9 @@ const Sidebar = () => {
           {"policy management"}
         </span>
         <span
-          onClick={() => { setActive("Identity providers");  navigate("/identity-providers");}}
+          onClick={() => { setActive("identity providers");  navigate("/identity-providers");}}
           className={`${
-            active == "Identity providers"
+            active == "identity providers"
               ? "dashboard-options active"
               : "dashboard-options"
           }`}

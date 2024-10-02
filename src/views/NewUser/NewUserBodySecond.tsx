@@ -1,17 +1,17 @@
-import { Button, Divider, Flex, Form, Input, InputRef, Select, SelectProps, Space } from 'antd';
+import { Button, Divider, Flex, Form, Input, Select, SelectProps, Space } from 'antd';
 import './NewUser.css'
 import { PlusOutlined } from "@ant-design/icons";
-import ArrowLeftIcon from '../../assets/arrowLeftIcon.svg'
-import OpenInNewIcon from '../../assets/OpenInNewIcon.svg'
-import InfoIcon from '../../assets/infoIcon.svg'
-import AddIcon from '../../assets/addIcon.svg'
+import ArrowLeftIcon from '@/assets/arrowLeftIcon.svg'
+import OpenInNewIcon from '@/assets/OpenInNewIcon.svg'
+import InfoIcon from '@/assets/infoIcon.svg'
+import AddIcon from '@/assets/addIcon.svg'
 import { useState } from 'react';
 import AppPermissionModal from './AppPermissionModal';
-import { inviteGroup, rolesOptions } from '../../mock';
+import { inviteGroup, rolesOptions } from '@/mock';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../../types';
-import { reset, setPermissions } from '../../redux/slices/Administration/users';
+import { AppDispatch } from '@/types';
+import { reset, setPermissions } from '@/redux/slices/Administration/users';
 type Props = {
   current: number;
   setCurrent: (current: number) => void;

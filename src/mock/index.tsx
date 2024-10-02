@@ -1,12 +1,15 @@
-import SlackIcon from "../assets/slackLogo.svg";
-import FigmaIcon from "../assets/figmaLogo.svg";
-import ConfluenceIcon from "../assets/conflenceLogo.svg";
-import MSOfficeIcon from "../assets/MSOfficeLogo.svg";
-import CreateUserIcon from "../assets/createUser.svg";
-import InviteUser from "../assets/inviteUser.svg";
-import { AppPermissions, Apps, AppStatus, Values } from "../constants/enums";
+import SlackIcon from "@/assets/slackLogo.svg";
+import FigmaIcon from "@/assets/figmaLogo.svg";
+import ConfluenceIcon from "@/assets/conflenceLogo.svg";
+import MSOfficeIcon from "@/assets/MSOfficeLogo.svg";
+import CreateUserIcon from "@/assets/createUser.svg";
+import InviteUser from "@/assets/inviteUser.svg";
+import HubspotIcon from "@/assets/hubspot.svg";
+import GithubIcon from "@/assets/github.svg";
+import AzureIcon from "@/assets/azure.svg";
+import { AppPermissions, Apps, AppStatus, Values } from "@/constants/enums";
 import { SelectProps } from "antd";
-import { appsListType, CardOptionsTypes, SelectedAppTableData } from "../types";
+import { appsListType, CardOptionsTypes, SelectedAppTableData, userTableType } from "../types";
 
 export const appsList: appsListType[] = [
   {
@@ -122,6 +125,9 @@ export const Icons = {
   figma: <FigmaIcon />,
   confluence: <ConfluenceIcon />,
   msOffice: <MSOfficeIcon />,
+  hubspot: <HubspotIcon />,
+  github: <GithubIcon />,
+  azure: <AzureIcon />,
 };
 
 export const selectedApplsTableData: SelectedAppTableData[] = [
@@ -148,5 +154,30 @@ export const selectedApplsTableData: SelectedAppTableData[] = [
     application: { name: "Microsoft Office 365", icon: <MSOfficeIcon /> },
     attachedPolicy: "Default",
     permissions: [AppPermissions.view, AppPermissions.edit],
+  },
+];
+
+export const userTableData: userTableType[] = [
+  {
+    key: "1",
+    account: {
+      avatar:
+        "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png",
+      name: "Ravi Teja",
+      email: "raviteja@gmail.com",
+    },
+    role: "Employee",
+    designation: "Sr. Software Developer",
+    permissions: [
+      Apps.confluence,
+      Apps.figma,
+      Apps.slack,
+      Apps.msOffice,
+      Apps.hubspot,
+      Apps.github,
+      Apps.adobe,
+    ],
+    groups: ["Voyage", "Platform Nx", "Error Nx", "Engage"],
+    created: new Date().toLocaleDateString(),
   },
 ];

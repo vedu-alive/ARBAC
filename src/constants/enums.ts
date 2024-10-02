@@ -22,4 +22,8 @@ export enum Apps {
     figma = "figma",
     confluence = "confluence",
     msOffice = "msOffice",
+    hubspot = "hubspot",
+    adobe = "azure",
+    github = "github",
+
 }

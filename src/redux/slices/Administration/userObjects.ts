@@ -1,5 +1,5 @@
 import { PayloadAction } from "@reduxjs/toolkit"
-import { roleAndPermission, Users } from "../../../types"
+import { roleAndPermission, Users } from "@/types"
 
 const userDetails: Users = {
     createType: null,

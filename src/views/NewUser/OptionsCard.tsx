@@ -1,6 +1,6 @@
 import { Dispatch } from 'react';
-import { Values } from '../../constants/enums';
-import { cardOptions } from '../../mock';
+import { Values } from '@/constants/enums';
+import { cardOptions } from '@/mock';
 import Card from './card';
 import './NewUser.css'
 

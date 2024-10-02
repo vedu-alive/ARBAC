@@ -1,15 +1,15 @@
 import { Button, Checkbox, Input, Radio, RadioChangeEvent } from "antd";
 import { ChangeEvent, Dispatch, SetStateAction, useEffect, useState } from "react";
-import CrossIcon from "../../assets/crossIcon.svg";
-import SearchIcon from "../../assets/searchIcon.svg";
-import OpenInNewIcon from "../../assets/OpenInNewIcon.svg";
-import InfoIcon from "../../assets/infoIcon.svg";
+import CrossIcon from "@/assets/crossIcon.svg";
+import SearchIcon from "@/assets/searchIcon.svg";
+import OpenInNewIcon from "@/assets/OpenInNewIcon.svg";
+import InfoIcon from "@/assets/infoIcon.svg";
 import './NewUser.css'
 import SelectedAppsTable from "./SelectedAppsTable";
-import { appsList, manuelPermissions } from "../../mock";
-import { debounce } from "../../utils/debounce";
-import { appsListType, SelectedAppTableData } from "../../types";
-import { AppPermissions, AppStatus } from "../../constants/enums";
+import { appsList, manuelPermissions } from "@/mock";
+import { debounce } from "@/utils/debounce";
+import { appsListType, SelectedAppTableData } from "@/types";
+import { AppPermissions, AppStatus } from "@/constants/enums";
 
 type Props = {
   isModalOpen: boolean;
@@ -57,7 +57,14 @@ const AppModal = ({ setIsModalOpen }: Props) => {
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const [appStatus, setAppStatus] = useState<AppStatus>(AppStatus.all);
   const [filteredApps, setFilteredApps] = useState(appsList);
-  const [selectedRowData, setSelectedRowData] = useState<SelectedAppTableData | null>(null);
+  const [selectedRowData, setSelectedRowData] = useState<SelectedAppTableData[]>([]);
+
+  useEffect(() => {
+    if (!selectedApps.length) {
+      setSelectedRowKeys([]);
+      setSelectedRowData([]);
+    }
+  }, [selectedApps]);
 
   const handleAppCardClick = (id: string) => {
     if (selectedApps.includes(id)) {
@@ -66,12 +73,12 @@ const AppModal = ({ setIsModalOpen }: Props) => {
     }
     setSelectedApps((prev) => [...prev, id]);
   };
-
-  // useEffect(() => {
-  //   setPermission(
-  //     selectedRowData?.permissions ?? [AppPermissions.view]
-  //   )
-  // },[selectedRowData])
+  
+  console.log(selectedRowData, "selectedRowData");
+  
+  const handleSaveChanges = () => {
+    setIsModalOpen(false);
+  }
 
   const handlePermissionClick = (id: AppPermissions) => {
     if (permission.includes(id)) {
@@ -132,7 +139,13 @@ const AppModal = ({ setIsModalOpen }: Props) => {
           </div>
           <div className="select-apps">
             <div className="select-apps-header">
-              {"Select Applications"} <Btns appStatus={appStatus} setAppStatus={setAppStatus} fliteredApps={filteredApps} setFilteredApps={setFilteredApps} />
+              {"Select Applications"}{" "}
+              <Btns
+                appStatus={appStatus}
+                setAppStatus={setAppStatus}
+                fliteredApps={filteredApps}
+                setFilteredApps={setFilteredApps}
+              />
             </div>
             <div className="app-card-container">
               {filteredApps.map((app) => (
@@ -177,7 +190,10 @@ const AppModal = ({ setIsModalOpen }: Props) => {
           <p className="app-modal-right-heading">
             {"Select Application Permission"}
           </p>
-          <Radio.Group defaultValue={1} disabled={selectedApps.length===0}>
+          <Radio.Group
+            defaultValue={1}
+            disabled={selectedApps.length === 0 || selectedRowData.length === 0}
+          >
             <Radio
               value={1}
               onChange={(e) => {
@@ -199,10 +215,19 @@ const AppModal = ({ setIsModalOpen }: Props) => {
               {manuelPermissions.map((item) => (
                 <div
                   key={item.id}
-                  className={selectedApps.length ? "permission-card": "permission-card-disabled"}
+                  className={
+                    selectedRowData.length || selectedRowData.length
+                      ? "permission-card"
+                      : "permission-card-disabled"
+                  }
                   onClick={() => handlePermissionClick(item.id)}
                 >
-                  <Checkbox checked={permission.includes(item.id)} disabled={selectedApps.length===0} />
+                  <Checkbox
+                    checked={permission.includes(item.id)}
+                    disabled={
+                      selectedApps.length === 0 || selectedRowData.length === 0
+                    }
+                  />
                   <p>{item.name}</p>
                 </div>
               ))}
@@ -221,7 +246,9 @@ const AppModal = ({ setIsModalOpen }: Props) => {
           </span>
           {"tab"}
         </p>
-        <Button type="link">Save Changes</Button>
+        <Button onClick={handleSaveChanges} type="primary">
+          Save Changes
+        </Button>
       </section>
     </div>
   );

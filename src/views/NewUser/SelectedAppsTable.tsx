@@ -2,16 +2,16 @@ import { Flex, Table } from 'antd';
 import { ReactNode, useMemo } from 'react';
 import { ColumnType } from 'antd/es/table';
 import './SelectedAppTable.css';
-import { Icons } from '../../mock';
-import { SelectedAppTableData } from '../../types';
-import { AppPermissions } from '../../constants/enums';
+import { Icons } from '@/mock';
+import { SelectedAppTableData } from '@/types';
+import { AppPermissions } from '@/constants/enums';
 
 type Props = {
   setSelectedRowKeys: (value: React.SetStateAction<React.Key[]>) => void;
   selectedRowKeys: React.Key[];
   selectedApps: string[];
   selectedPermissions: AppPermissions[];
-  setSelectedRowData: (value: React.SetStateAction<SelectedAppTableData | null>) => void;
+  setSelectedRowData: (value: React.SetStateAction<SelectedAppTableData[]>) => void;
 };
 
 const permissionsArray = {
@@ -96,14 +96,17 @@ const SelectedAppsTable = ({ selectedRowKeys, setSelectedRowKeys, selectedApps, 
 
     const onSelectChange = (
       newSelectedRowKeys: React.Key[],
+      selectedRows: SelectedAppTableData[],
     ) => {
       setSelectedRowKeys(newSelectedRowKeys);
+      setSelectedRowData(selectedRows);
     };
 
     const rowSelection = {
         selectedRowKeys,
         onChange: onSelectChange,
     };
+  
   
   return (
     <Table

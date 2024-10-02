@@ -3,16 +3,16 @@ import "./NewUser.css";
 import OptionsCard from "./OptionsCard";
 import { useEffect, useState } from "react";
 import { useForm } from "antd/es/form/Form";
-import EyeIcon from "../../assets/eyeIcon.svg";
-import EyeCloseIcon from "../../assets/eyeCloseIcon.svg";
+import EyeIcon from "@/assets/eyeIcon.svg";
+import EyeCloseIcon from "@/assets/eyeCloseIcon.svg";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setUserDetails,
   usersData,
-} from "../../redux/slices/Administration/users";
-import { departmentOptions } from "../../mock";
-import { Values } from "../../constants/enums";
-import { AppDispatch } from "../../types";
+} from "@/redux/slices/Administration/users";
+import { departmentOptions } from "@/mock";
+import { Values } from "@/constants/enums";
+import { AppDispatch } from "@/types";
 
 type NewUserBodyProps = {
   current: number;

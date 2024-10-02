@@ -1,8 +1,8 @@
 import { BrowserRouter, Outlet, Route, Routes,} from "react-router-dom"
-import Layout from "../components/Layout/Layout"
-import Dashboard from "../views/Dashboard/Dashboard"
-import RolesAdmin from "../views/Roles&Admin/Roles&Admin";
-import NewUser from "../views/NewUser/NewUser";
+import Layout from "@/components/Layout/Layout"
+import Dashboard from "@/views/Dashboard/Dashboard"
+import RolesAdmin from "@/views/Roles&Admin/Roles&Admin";
+import NewUser from "@/views/NewUser/NewUser";
 
 const Router= () => {
   return (
