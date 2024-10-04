@@ -1,7 +1,8 @@
 .table-app-name{
     display: flex;
     align-items: center;
-    gap: 0.5rem
+    gap: 0.5rem;
+    text-transform: capitalize;
 }
 .selected-app-table{
     margin: 0 0.25rem;

@@ -159,7 +159,7 @@ export const selectedApplsTableData: SelectedAppTableData[] = [
 
 export const userTableData: userTableType[] = [
   {
-    key: "1",
+    id: "1",
     account: {
       avatar:
         "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png",
@@ -168,7 +168,7 @@ export const userTableData: userTableType[] = [
     },
     role: "Employee",
     designation: "Sr. Software Developer",
-    permissions: [
+    applications: [
       Apps.confluence,
       Apps.figma,
       Apps.slack,
@@ -178,6 +178,6 @@ export const userTableData: userTableType[] = [
       Apps.adobe,
     ],
     groups: ["Voyage", "Platform Nx", "Error Nx", "Engage"],
-    created: new Date().toLocaleDateString(),
+    createdOn: new Date().toLocaleDateString(),
   },
 ];

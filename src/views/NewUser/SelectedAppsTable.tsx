@@ -1,17 +1,22 @@
 import { Flex, Table } from 'antd';
-import { ReactNode, useMemo } from 'react';
+import { ReactNode, SetStateAction, useEffect, useMemo, useState } from 'react';
 import { ColumnType } from 'antd/es/table';
 import './SelectedAppTable.css';
 import { Icons } from '@/mock';
 import { SelectedAppTableData } from '@/types';
 import { AppPermissions } from '@/constants/enums';
+import { TableRowSelection } from 'antd/es/table/interface';
 
 type Props = {
   setSelectedRowKeys: (value: React.SetStateAction<React.Key[]>) => void;
   selectedRowKeys: React.Key[];
   selectedApps: string[];
   selectedPermissions: AppPermissions[];
-  setSelectedRowData: (value: React.SetStateAction<SelectedAppTableData[]>) => void;
+  setSelectedRowData: (
+    value: React.SetStateAction<SelectedAppTableData[]>
+  ) => void;
+  selectedRowData: SelectedAppTableData[];
+  setPermission: (x:SetStateAction<AppPermissions[]>)=>void;
 };
 
 const permissionsArray = {
@@ -26,10 +31,11 @@ const Tag = ({ text }: { text: string }) => {
   return <span className={text}>{text}</span>;
 };
 
-const SelectedAppsTable = ({ selectedRowKeys, setSelectedRowKeys, selectedApps, selectedPermissions,setSelectedRowData }: Props) => {
+const SelectedAppsTable = ({ selectedRowKeys, setSelectedRowKeys, selectedApps, selectedPermissions,setSelectedRowData,selectedRowData,setPermission }: Props) => {
+  const [tableData, setTableData] = useState<SelectedAppTableData[]>([]);
 
-  const tableData: SelectedAppTableData[] = useMemo(() => {
-    return selectedApps.map((item) => {
+  useMemo(() => {
+    const data =  JSON.parse(JSON.stringify(selectedApps)).map((item:string) => {
       return {
         key: item,
         application: {
@@ -38,10 +44,22 @@ const SelectedAppsTable = ({ selectedRowKeys, setSelectedRowKeys, selectedApps, 
         },
         //* need to change these 2 values
         attachedPolicy: "Default",
-        permissions: selectedPermissions.map((permission) => permissionsArray[permission]) as AppPermissions[],
+        permissions: selectedPermissions.map((permission) =>permission) as AppPermissions[],
       };
     });
-  }, [selectedApps, selectedPermissions]);
+    setTableData(data);
+  }, [selectedApps,]);
+
+  useEffect(() => {
+
+    const index = tableData.findIndex((item) => item.key === selectedRowData[0]?.key);
+    if (index !== -1) {
+      const data = [...tableData];
+      data[index].permissions = selectedPermissions.map((permission) => permission) as AppPermissions[];
+      setTableData(data);
+    }
+
+  }, [selectedPermissions, selectedRowData]);
   
     const columns: ColumnType<SelectedAppTableData>[] = [
       {
@@ -86,7 +104,7 @@ const SelectedAppsTable = ({ selectedRowKeys, setSelectedRowKeys, selectedApps, 
           return (
             <Flex align='center' gap={'4px'} wrap='wrap' >
               {val.map((item, i) => (
-                <Tag key={i} text={item} />
+                <Tag key={i} text={permissionsArray[item as keyof typeof permissionsArray]} />
               ))}
             </Flex>
           );
@@ -98,14 +116,20 @@ const SelectedAppsTable = ({ selectedRowKeys, setSelectedRowKeys, selectedApps, 
       newSelectedRowKeys: React.Key[],
       selectedRows: SelectedAppTableData[],
     ) => {
+
+      setPermission([...selectedRows[0]?.permissions]);
       setSelectedRowKeys(newSelectedRowKeys);
       setSelectedRowData(selectedRows);
     };
 
-    const rowSelection = {
-        selectedRowKeys,
-        onChange: onSelectChange,
+    const rowSelection: TableRowSelection<SelectedAppTableData> = {
+      type: "radio",
+      selectedRowKeys,
+      onChange: onSelectChange,
     };
+  
+  console.log("tableData", tableData);
+  
   
   
   return (

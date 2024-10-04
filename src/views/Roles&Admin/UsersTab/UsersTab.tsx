@@ -1,13 +1,14 @@
-import { Avatar, Dropdown, Flex, MenuProps, Space, Table, Tooltip } from "antd";
+import { Avatar, Dropdown, Flex, MenuProps, Skeleton, Space, Table, Tooltip } from "antd";
 import UserHeader from "./UserHeader";
 import { ColumnType } from "antd/es/table";
-import { Children, useMemo, useState } from "react";
+import { useState } from "react";
 import DeleteIcon from "@/assets/deleteIcon.svg";
 import EditIcon from "@/assets/editIcon.svg";
 import "./UsersTab.css";
 import { accountType, userTableType } from "@/types";
-import { Icons, userTableData } from "@/mock";
+import { Icons } from "@/mock";
 import { AppPermissions, Apps } from "@/constants/enums";
+import { useGetUsersQuery } from "@/redux/services/Administration";
 
 const getTooltipData = (permissions: Apps[]) => {
   return permissions.map((permission) => (
@@ -159,6 +160,7 @@ const handleDropdownChange: MenuProps["onClick"] = (e) => {
 
 const UsersTab = () => {
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
+  const { data:TableData, isLoading } = useGetUsersQuery('usersTab');
   const columns: ColumnType<userTableType>[] = [
     {
       title: <span className="table-header-label">Account</span>,
@@ -185,7 +187,7 @@ const UsersTab = () => {
       title: (
         <span className="table-header-label">Applications Permissions</span>
       ),
-      dataIndex: "permissions",
+      dataIndex: "applications",
       render: (permissions: Apps[]) => (
         <Dropdown
           menu={{
@@ -194,6 +196,7 @@ const UsersTab = () => {
             multiple: true,
             onClick: handleDropdownChange,
           }}
+          rootClassName="app-permission-dropdown"
           arrow
         >
           <Space>{getApplicationsIcons(permissions)}</Space>
@@ -207,7 +210,7 @@ const UsersTab = () => {
     },
     {
       title: <span className="table-header-label">Created on</span>,
-      dataIndex: "created",
+      dataIndex: "createdOn",
     },
     {
       title: <span className="table-header-label">Actions</span>,
@@ -237,13 +240,15 @@ const UsersTab = () => {
   return (
     <div>
       <UserHeader />
-      <Table
-        rootClassName="userTable"
-        bordered={false}
-        columns={columns}
-        rowSelection={rowSelection}
-        dataSource={userTableData}
-      />
+      <Skeleton active loading={isLoading} style={{padding: '1rem'}} >
+        <Table
+          rootClassName="userTable"
+          bordered={false}
+          columns={columns}
+          rowSelection={rowSelection}
+          dataSource={TableData}
+        />
+      </Skeleton>
     </div>
   );
 };

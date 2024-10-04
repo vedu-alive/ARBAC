@@ -28,14 +28,14 @@ export type accountType = {
 }
 
 export type userTableType = {
-    key: Key,
-    account: accountType,
-    role: string,
-    designation: string,
-    permissions: string[],
-    groups: string[],
-    created: string,
-}
+  id: Key;
+  account: accountType;
+  role: string;
+  designation: string;
+  applications: string[];
+  groups: string[];
+  createdOn: string;
+};
 
 export type CardOptionsTypes = {
     id: Values.createType | Values.inviteType,

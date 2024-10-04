@@ -166,9 +166,7 @@
     background-color: #F5F5F5;
     text-wrap: nowrap;
 }
-.app-permission-menu.ant-menu-horizontal{
-    border: none;
-}
-.app-permission-menu.ant-menu-light.ant-menu-horizontal >.ant-menu-submenu::after{
-    border:none;
+.ant-dropdown .ant-dropdown-menu .ant-dropdown-menu-submenu-title .ant-dropdown-menu-submenu-expand-icon .ant-dropdown-menu-submenu-arrow-icon{
+    position: relative;
+    top: 0.375rem;
 }

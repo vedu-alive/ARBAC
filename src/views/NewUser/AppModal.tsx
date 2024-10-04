@@ -10,6 +10,7 @@ import { appsList, manuelPermissions } from "@/mock";
 import { debounce } from "@/utils/debounce";
 import { appsListType, SelectedAppTableData } from "@/types";
 import { AppPermissions, AppStatus } from "@/constants/enums";
+import { setPermissions } from "@/redux/slices/Administration/users";
 
 type Props = {
   isModalOpen: boolean;
@@ -58,6 +59,12 @@ const AppModal = ({ setIsModalOpen }: Props) => {
   const [appStatus, setAppStatus] = useState<AppStatus>(AppStatus.all);
   const [filteredApps, setFilteredApps] = useState(appsList);
   const [selectedRowData, setSelectedRowData] = useState<SelectedAppTableData[]>([]);
+  
+  useEffect(() => {
+    if (selectedRowData.length) {
+      setPermission(selectedRowData[0].permissions);
+    }
+  }, [selectedRowData]);
 
   useEffect(() => {
     if (!selectedApps.length) {
@@ -73,8 +80,6 @@ const AppModal = ({ setIsModalOpen }: Props) => {
     }
     setSelectedApps((prev) => [...prev, id]);
   };
-  
-  console.log(selectedRowData, "selectedRowData");
   
   const handleSaveChanges = () => {
     setIsModalOpen(false);
@@ -111,9 +116,6 @@ const AppModal = ({ setIsModalOpen }: Props) => {
     );
     setFilteredApps(filteredData);
   }, 500);
-  
-  console.log(selectedRowKeys, "selectedRowKeys");
-  
 
   return (
     <div className="app-modal">
@@ -180,7 +182,9 @@ const AppModal = ({ setIsModalOpen }: Props) => {
             selectedRowKeys={selectedRowKeys}
             setSelectedRowKeys={setSelectedRowKeys}
             setSelectedRowData={setSelectedRowData}
+            selectedRowData={selectedRowData}
             selectedApps={selectedApps}
+            setPermission={setPermission}
             selectedPermissions={permission}
           />
         </section>
