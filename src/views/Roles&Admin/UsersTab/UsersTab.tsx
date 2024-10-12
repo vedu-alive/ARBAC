@@ -1,14 +1,16 @@
-import { Avatar, Dropdown, Flex, MenuProps, Skeleton, Space, Table, Tooltip } from "antd";
+import { Avatar, Button, Dropdown, Flex, MenuProps, Skeleton, Space, Table, Tooltip } from "antd";
 import UserHeader from "./UserHeader";
 import { ColumnType } from "antd/es/table";
 import { useState } from "react";
 import DeleteIcon from "@/assets/deleteIcon.svg";
 import EditIcon from "@/assets/editIcon.svg";
 import "./UsersTab.css";
-import { accountType, userTableType } from "@/types";
+import { accountType, TableApplicationsType, userTableType } from "@/types";
 import { Icons } from "@/mock";
 import { AppPermissions, Apps } from "@/constants/enums";
 import { useGetUsersQuery } from "@/redux/services/Administration";
+import { getRandomColor } from "@/utils";
+import { useNotificationContext } from "@/context/notificationContext";
 
 const getTooltipData = (permissions: Apps[]) => {
   return permissions.map((permission) => (
@@ -160,14 +162,27 @@ const handleDropdownChange: MenuProps["onClick"] = (e) => {
 
 const UsersTab = () => {
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-  const { data:TableData, isLoading } = useGetUsersQuery('usersTab');
+  const { data: TableData, isLoading } = useGetUsersQuery('usersTab');
+  const { contextHolder } = useNotificationContext();
   const columns: ColumnType<userTableType>[] = [
     {
       title: <span className="table-header-label">Account</span>,
       dataIndex: "account",
       render: (account: accountType) => (
         <div className="account">
-          <Avatar src={account.avatar} alt={account.name} />
+          {account.avatar ? (
+            <Avatar src={account.avatar} alt={account.name} />
+          ) : (
+            <Avatar
+              style={{
+                backgroundColor: getRandomColor(),
+                verticalAlign: "middle",
+              }}
+              gap={4}
+            >
+              {account.name[0]}
+            </Avatar>
+          )}
           <div className="account-details">
             <span className="acc-name">{account.name}</span>
             <span className="acc-email">{account.email}</span>
@@ -188,20 +203,22 @@ const UsersTab = () => {
         <span className="table-header-label">Applications Permissions</span>
       ),
       dataIndex: "applications",
-      render: (permissions: Apps[]) => (
-        <Dropdown
-          menu={{
-            items: getMenuItems(permissions),
-            selectable: true,
-            multiple: true,
-            onClick: handleDropdownChange,
-          }}
-          rootClassName="app-permission-dropdown"
-          arrow
-        >
-          <Space>{getApplicationsIcons(permissions)}</Space>
-        </Dropdown>
-      ),
+      render: (applications: TableApplicationsType[]) => {
+        const apps = applications.map((app) => Apps[app.application.name as keyof typeof Apps]);
+        return (
+          <Dropdown
+            menu={{
+              items: getMenuItems(apps),
+              selectable: true,
+              multiple: true,
+              onClick: handleDropdownChange,
+            }}
+            rootClassName="app-permission-dropdown"
+            arrow
+          >
+            <Space>{getApplicationsIcons(apps)}</Space>
+          </Dropdown>
+      )},
     },
     {
       title: <span className="table-header-label">{"Group(s)"}</span>,
@@ -239,9 +256,11 @@ const UsersTab = () => {
   };
   return (
     <div>
+      {contextHolder}
       <UserHeader />
-      <Skeleton active loading={isLoading} style={{padding: '1rem'}} >
+      <Skeleton active loading={isLoading} style={{ padding: "1rem" }}>
         <Table
+          rowKey={(record) => record.id}
           rootClassName="userTable"
           bordered={false}
           columns={columns}

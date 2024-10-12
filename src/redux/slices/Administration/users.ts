@@ -9,6 +9,6 @@ const users = createSlice({
   reducers: reducers,
 });
 
-export const { setUserDetails,setPermissions,reset } = users.actions;
+export const { setUserDetails,setPermissions,reset,setSavedApplications } = users.actions;
 export const usersData = (state: RootState) => state.users;
 export default users;

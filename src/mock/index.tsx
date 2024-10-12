@@ -9,7 +9,7 @@ import GithubIcon from "@/assets/github.svg";
 import AzureIcon from "@/assets/azure.svg";
 import { AppPermissions, Apps, AppStatus, Values } from "@/constants/enums";
 import { SelectProps } from "antd";
-import { appsListType, CardOptionsTypes, SelectedAppTableData, userTableType } from "../types";
+import { appsListType, CardOptionsTypes, SelectedAppTableData, } from "../types";
 
 export const appsList: appsListType[] = [
   {
@@ -157,27 +157,27 @@ export const selectedApplsTableData: SelectedAppTableData[] = [
   },
 ];
 
-export const userTableData: userTableType[] = [
-  {
-    id: "1",
-    account: {
-      avatar:
-        "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png",
-      name: "Ravi Teja",
-      email: "raviteja@gmail.com",
-    },
-    role: "Employee",
-    designation: "Sr. Software Developer",
-    applications: [
-      Apps.confluence,
-      Apps.figma,
-      Apps.slack,
-      Apps.msOffice,
-      Apps.hubspot,
-      Apps.github,
-      Apps.adobe,
-    ],
-    groups: ["Voyage", "Platform Nx", "Error Nx", "Engage"],
-    createdOn: new Date().toLocaleDateString(),
-  },
-];
+// export const userTableData: userTableType[] = [
+//   {
+//     id: "1",
+//     account: {
+//       avatar:
+//         "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png",
+//       name: "Ravi Teja",
+//       email: "raviteja@gmail.com",
+//     },
+//     role: "Employee",
+//     designation: "Sr. Software Developer",
+//     applications: [
+//       Apps.confluence,
+//       Apps.figma,
+//       Apps.slack,
+//       Apps.msOffice,
+//       Apps.hubspot,
+//       Apps.github,
+//       Apps.adobe,
+//     ],
+//     groups: ["Voyage", "Platform Nx", "Error Nx", "Engage"],
+//     createdOn: new Date().toLocaleDateString(),
+//   },
+// ];

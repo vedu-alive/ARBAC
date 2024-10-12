@@ -3,19 +3,18 @@ import Layout from "@/components/Layout/Layout"
 import Dashboard from "@/views/Dashboard/Dashboard"
 import RolesAdmin from "@/views/Roles&Admin/Roles&Admin";
 import NewUser from "@/views/NewUser/NewUser";
+import Login from "@/components/Login";
 
 const Router= () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Layout />} >
-          <Route path="/dashboard" element={<Dashboard />}/>
-          <Route
-            path="/role-administration"
-            element={<Outlet/>}
-          >
+        <Route path="login" element={<Login/>} />
+        <Route path="/" element={<Layout />}>
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/role-administration" element={<Outlet />}>
             <Route index element={<RolesAdmin />} />
-            <Route path="new-user" element={<NewUser/>} />
+            <Route path="new-user" element={<NewUser />} />
           </Route>
           <Route path="app-management" element={<div>App Management</div>} />
           <Route

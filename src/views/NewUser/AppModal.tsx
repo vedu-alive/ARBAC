@@ -1,54 +1,22 @@
-import { Button, Checkbox, Input, Radio, RadioChangeEvent } from "antd";
-import { ChangeEvent, Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Button, Checkbox, Input, Radio, } from "antd";
+import { ChangeEvent, SetStateAction, useEffect, useState } from "react";
 import CrossIcon from "@/assets/crossIcon.svg";
 import SearchIcon from "@/assets/searchIcon.svg";
 import OpenInNewIcon from "@/assets/OpenInNewIcon.svg";
 import InfoIcon from "@/assets/infoIcon.svg";
 import './NewUser.css'
 import SelectedAppsTable from "./SelectedAppsTable";
-import { appsList, manuelPermissions } from "@/mock";
-import { debounce } from "@/utils/debounce";
-import { appsListType, SelectedAppTableData } from "@/types";
+import { appsList, Icons, manuelPermissions } from "@/mock";
+import { convertTableData, debounce } from "@/utils";
+import { AppDispatch, SelectedAppTableData } from "@/types";
 import { AppPermissions, AppStatus } from "@/constants/enums";
-import { setPermissions } from "@/redux/slices/Administration/users";
+import Btns from "./utils/Btns";
+import { useDispatch, useSelector } from "react-redux";
+import { setSavedApplications, usersData,} from "@/redux/slices/Administration/users";
 
 type Props = {
   isModalOpen: boolean;
   setIsModalOpen: (x: SetStateAction<boolean>) => void;
-};
-
-type BtnsProps = {
-  fliteredApps: appsListType[];
-  setFilteredApps: Dispatch<SetStateAction<appsListType[]>>;
-  appStatus: AppStatus;
-  setAppStatus: Dispatch<SetStateAction<AppStatus>>;
-};
-
-const Btns = ({ setFilteredApps,appStatus,setAppStatus }: BtnsProps) => {
-  const handleRadioChange = (e: RadioChangeEvent) => {
-    const value = e.target.value;
-    switch (value) {
-      case AppStatus.all:
-        setFilteredApps(appsList); setAppStatus(AppStatus.all);
-        break;
-      case AppStatus.active:
-        setFilteredApps(appsList.filter((app) => app.status === AppStatus.active)); setAppStatus(AppStatus.active);
-        break;
-      case AppStatus.inactive:
-        setFilteredApps(appsList.filter((app) => app.status === AppStatus.inactive)); setAppStatus(AppStatus.inactive);
-        break;
-      default:
-        break;
-    }
-    
-  };
-  return (
-    <Radio.Group rootClassName="" defaultValue={appStatus} buttonStyle="solid" onChange={handleRadioChange}>
-      <Radio.Button value={AppStatus.all} >All</Radio.Button>
-      <Radio.Button value={AppStatus.active}>Active</Radio.Button>
-      <Radio.Button value={AppStatus.inactive}>Inactive</Radio.Button>
-    </Radio.Group>
-  );
 };
 
 const AppModal = ({ setIsModalOpen }: Props) => {
@@ -59,6 +27,8 @@ const AppModal = ({ setIsModalOpen }: Props) => {
   const [appStatus, setAppStatus] = useState<AppStatus>(AppStatus.all);
   const [filteredApps, setFilteredApps] = useState(appsList);
   const [selectedRowData, setSelectedRowData] = useState<SelectedAppTableData[]>([]);
+  const [selectedAppTableData, setSelectedAppTableData] = useState<SelectedAppTableData[]>([]);
+  const dispatch = useDispatch<AppDispatch>();
   
   useEffect(() => {
     if (selectedRowData.length) {
@@ -73,7 +43,29 @@ const AppModal = ({ setIsModalOpen }: Props) => {
     }
   }, [selectedApps]);
 
+  const generateTableData = (id: string) => {
+    const index = selectedAppTableData.findIndex((item) => item.key === id);
+    if (index !== -1) {
+      setSelectedAppTableData((prev) => prev.filter((item) => item.key !== id));
+    }
+    else {
+      const data = {
+        key: id,
+        application: {
+          icon: Icons[id as keyof typeof Icons],
+          name: id,
+        },
+        attachedPolicy: "Default",
+        //* need to decide whether to keep the default permission or not
+        permissions: [AppPermissions.view],
+        // permissions: permission,
+      };
+      setSelectedAppTableData(prev=>[...prev,data]);
+    }
+  }
+
   const handleAppCardClick = (id: string) => {
+    generateTableData(id);
     if (selectedApps.includes(id)) {
       setSelectedApps(selectedApps.filter((app) => app !== id));
       return;
@@ -82,6 +74,7 @@ const AppModal = ({ setIsModalOpen }: Props) => {
   };
   
   const handleSaveChanges = () => {
+    dispatch(setSavedApplications(selectedAppTableData));
     setIsModalOpen(false);
   }
 
@@ -119,7 +112,7 @@ const AppModal = ({ setIsModalOpen }: Props) => {
 
   return (
     <div className="app-modal">
-      <section className="modal-header" onClick={() => console.log("Clicked")}>
+      <section className="modal-header">
         <p>{"Application Catalogue"}</p>
         <div
           style={{ cursor: "pointer" }}
@@ -182,6 +175,7 @@ const AppModal = ({ setIsModalOpen }: Props) => {
             selectedRowKeys={selectedRowKeys}
             setSelectedRowKeys={setSelectedRowKeys}
             setSelectedRowData={setSelectedRowData}
+            selectedAppTableData={selectedAppTableData}
             selectedRowData={selectedRowData}
             selectedApps={selectedApps}
             setPermission={setPermission}
@@ -201,7 +195,6 @@ const AppModal = ({ setIsModalOpen }: Props) => {
             <Radio
               value={1}
               onChange={(e) => {
-                console.log(typeof e.target.value);
                 setSelectedPermission(e.target.value);
               }}
             >

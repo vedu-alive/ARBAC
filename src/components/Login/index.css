@@ -1,0 +1,51 @@
+/** Welcome Text */
+
+.welcome-text{
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+}
+
+/** Email Card */
+.email-card{
+    border: 1px solid #ccc;
+    padding: 1rem 2rem;
+    border-radius: 0.5rem;
+}
+.login-card{
+    width: 25rem;
+}
+.link-txt{
+    margin: auto;
+    font-family: Poppins;
+    margin-bottom: 1rem;
+}
+.cred-txt{
+    font-family: Poppins;
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin: auto;
+    margin-bottom: 0.25rem;
+
+}
+.banner-txt{
+    font-size: 1.5rem;
+    font-weight: 500;
+    font-family: Poppins;
+    margin:auto;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+.small-txt{
+    margin-left: 1.5rem;
+}
+.forget-pass{
+    margin: auto;
+    margin-top: 1.5rem;
+}
+
+/** Login  */
+.login{
+    height: 100vh;
+    width: 100%;
+}

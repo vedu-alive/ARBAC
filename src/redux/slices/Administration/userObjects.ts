@@ -1,5 +1,5 @@
 import { PayloadAction } from "@reduxjs/toolkit"
-import { roleAndPermission, Users } from "@/types"
+import { roleAndPermission, SelectedAppTableData, Users } from "@/types"
 
 const userDetails: Users = {
     createType: null,
@@ -14,10 +14,12 @@ const permission: roleAndPermission = {
     role: "",
     application: [],
 }
+const savedApplications: SelectedAppTableData[] = []
 
 export const initialState = {
     userDetails: userDetails,
     permission: permission,
+    savedApplications,
 
 }
 export const reducers = {
@@ -27,7 +29,11 @@ export const reducers = {
     setPermissions: (state: typeof initialState, action: PayloadAction<roleAndPermission>) => {
         state.permission = action.payload; return state;
     },
+    setSavedApplications: (state: typeof initialState, action: PayloadAction<SelectedAppTableData[]>) => {
+        state.savedApplications = action.payload; return state;
+    },
     reset: ((state: typeof initialState) => {
-        state = { userDetails, permission }; return state;
-    })
+        state = { ...state, userDetails, permission, };
+        return state;
+    }),
 }

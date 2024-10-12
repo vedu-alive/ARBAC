@@ -1,15 +1,12 @@
 import { Button, Form, Input, Select } from "antd";
 import "./NewUser.css";
-import OptionsCard from "./OptionsCard";
+import OptionsCard from "./utils/OptionsCard";
 import { useEffect, useState } from "react";
 import { useForm } from "antd/es/form/Form";
 import EyeIcon from "@/assets/eyeIcon.svg";
 import EyeCloseIcon from "@/assets/eyeCloseIcon.svg";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  setUserDetails,
-  usersData,
-} from "@/redux/slices/Administration/users";
+import { setUserDetails, usersData } from "@/redux/slices/Administration/users";
 import { departmentOptions } from "@/mock";
 import { Values } from "@/constants/enums";
 import { AppDispatch } from "@/types";
@@ -27,7 +24,9 @@ type formValuesType = {
   userName: string;
 };
 const NewUserBody = ({ current, setCurrent }: NewUserBodyProps) => {
-  const [selectedOptions, setSelectedOptions] = useState<Values>(Values.createType);
+  const [selectedOptions, setSelectedOptions] = useState<Values>(
+    Values.createType
+  );
   const [showPass, setShowPass] = useState(false);
   const [showRePass, setShowRePass] = useState(false);
   const { userDetails } = useSelector(usersData);
@@ -36,23 +35,27 @@ const NewUserBody = ({ current, setCurrent }: NewUserBodyProps) => {
   const handleFinish = async (values: formValuesType) => {
     try {
       await form.validateFields();
-      selectedOptions && dispatch(
-        setUserDetails({
-          confirmPassword: values.confirmPassword,
-          createType: selectedOptions,
-          department: values.department,
-          jobTitle: values.jobTitle,
-          name: values.userName,
-          password: values.password,
-        })
-      );
+      selectedOptions &&
+        dispatch(
+          setUserDetails({
+            confirmPassword: values.confirmPassword,
+            createType: selectedOptions,
+            department: values.department,
+            jobTitle: values.jobTitle,
+            name: values.userName,
+            password: values.password,
+          })
+        );
       setCurrent(current + 1);
     } catch (error) {}
   };
   useEffect(() => {
     if (userDetails) {
-      if (!Object.values(userDetails).some(items => items === "" || items === null))
-      {
+      if (
+        !Object.values(userDetails).some(
+          (items) => items === "" || items === null
+        )
+      ) {
         form.setFieldsValue({
           userName: userDetails.name,
           confirmPassword: userDetails.confirmPassword,
@@ -69,8 +72,13 @@ const NewUserBody = ({ current, setCurrent }: NewUserBodyProps) => {
     <div className="newUser-body">
       <p className="newUser-headings">{"Create new User"}</p>
       <Form layout="vertical" onFinish={handleFinish} form={form}>
-        <OptionsCard selectedOptions={selectedOptions} setSelectedOptions={setSelectedOptions} />
-        <a className="help-typo" target="_blank" href="/help-decide-user">{"Help me decide"}</a>
+        <OptionsCard
+          selectedOptions={selectedOptions}
+          setSelectedOptions={setSelectedOptions}
+        />
+        <a className="help-typo" target="_blank" href="/help-decide-user">
+          {"Help me decide"}
+        </a>
         <Form.Item label="Full Name" name="userName">
           <Input
             placeholder="Enter user's full name (e.g Jackson Serrif)"

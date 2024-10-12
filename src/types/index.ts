@@ -2,9 +2,9 @@ import { Key } from "react";
 import { AppPermissions, AppStatus, Values } from "../constants/enums";
 import store from "@/redux/store";
 
-
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
+export type NotificationType = "success" | "info" | "warning" | "error";
 
 export type Users={
     createType: Values.createType | Values.inviteType | null;
@@ -27,12 +27,19 @@ export type accountType = {
     email: string;
 }
 
+export type TableApplicationsType = {
+    key: Key;
+    application: { icon?: JSX.Element, name: string };
+    attachedPolicy: string;
+    permissions: AppPermissions[];
+}
+
 export type userTableType = {
   id: Key;
   account: accountType;
   role: string;
   designation: string;
-  applications: string[];
+  applications: TableApplicationsType;
   groups: string[];
   createdOn: string;
 };
@@ -47,7 +54,7 @@ export type CardOptionsTypes = {
 
 export type SelectedAppTableData = {
     key: Key,
-    application: { icon: JSX.Element, name: string },
+    application: { icon?: JSX.Element, name: string },
     attachedPolicy: string,
     permissions: AppPermissions[],
 }

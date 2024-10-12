@@ -11,7 +11,7 @@ const administrationService = createApi({
     }),
     createUser: builder.mutation({
       query: (body) => ({
-        url: "users",
+        url: "add-users",
         method: "POST",
         body,
       }),
@@ -36,5 +36,5 @@ const administrationService = createApi({
   }),
 });
 
-export const { useGetUsersQuery } = administrationService;
+export const { useGetUsersQuery, useCreateUserMutation } = administrationService;
 export default administrationService;
