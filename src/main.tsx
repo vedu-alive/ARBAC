@@ -7,19 +7,23 @@ import store from './redux/store.ts'
 import { NotificationProvider } from './context/notificationContext.tsx'
 import { ConfigProvider } from 'antd'
 import { fontFamily } from './utils/index.ts'
-
+import { GoogleOAuthProvider } from '@react-oauth/google';
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <Provider store={store}>
-      <ConfigProvider theme={{
-        token: {
-          fontFamily: fontFamily
-        }
-      }}>
-        <NotificationProvider>
-          <App />
-        </NotificationProvider>
-      </ConfigProvider>
-    </Provider>
+    <GoogleOAuthProvider clientId={import.meta.env.VITE_API_GOOGLE_CLIENT_ID}>
+      <Provider store={store}>
+        <ConfigProvider
+          theme={{
+            token: {
+              fontFamily: fontFamily,
+            },
+          }}
+        >
+          <NotificationProvider>
+            <App />
+          </NotificationProvider>
+        </ConfigProvider>
+      </Provider>
+    </GoogleOAuthProvider>
   </React.StrictMode>
 );

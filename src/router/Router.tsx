@@ -1,15 +1,17 @@
-import { BrowserRouter, Outlet, Route, Routes,} from "react-router-dom"
+import { BrowserRouter, Outlet, Route, Routes} from "react-router-dom"
 import Layout from "@/components/Layout/Layout"
 import Dashboard from "@/views/Dashboard/Dashboard"
 import RolesAdmin from "@/views/Roles&Admin/Roles&Admin";
 import NewUser from "@/views/NewUser/NewUser";
 import Login from "@/components/Login";
+import Signup from "@/components/Signup";
 
-const Router= () => {
+const Router = () => {
   return (
-    <BrowserRouter>
+    <BrowserRouter >
       <Routes>
-        <Route path="login" element={<Login/>} />
+        <Route path="login" element={<Login />} />
+        <Route path="signup" element={<Signup />} />
         <Route path="/" element={<Layout />}>
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/role-administration" element={<Outlet />}>

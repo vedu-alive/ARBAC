@@ -1,0 +1,15 @@
+.customDivider-wrapper{
+    position: relative;
+}
+.customDivider{
+    border-bottom: 1px solid #ccc;
+    flex: 1;
+}
+.customDivider-child{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 0 0.5rem;
+    color: #757575;
+}

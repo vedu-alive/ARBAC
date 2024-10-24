@@ -8,3 +8,13 @@ body {
   background: #f5f6f8;
   font-family: "Poppins", "Open Sans", "Montserrat", "Inter", sans-serif !important;
 }
+/* Global CSS Variables */
+:root {
+  --bg-color: #f5f6f8;
+  --text-color: #000;
+}
+
+.dark-theme {
+  --bg-color: #333;
+  --text-color: #fff;
+}

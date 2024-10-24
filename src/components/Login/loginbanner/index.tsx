@@ -1,12 +1,14 @@
-import '../index.css'
+import { Flex } from "antd";
+import Logo from '@/assets/logo.svg';
+import "../index.css";
 const WelcomeText = () => {
   return (
-    <p className="welcome-text">
-      {"Welcome to"}
+    <Flex className="welcome-text" align="center" justify="center" gap={4}>
+      <Logo />
       <span>{"Auth"}</span>
       <span>{"Center"}</span>
-    </p>
+    </Flex>
   );
-}
+};
 
-export { WelcomeText }
+export { WelcomeText };

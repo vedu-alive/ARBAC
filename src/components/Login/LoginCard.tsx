@@ -1,9 +1,17 @@
-import { Button, Checkbox, Divider, Flex, Form, Input, Typography } from "antd";
+import { Button, Checkbox, Flex, Form, Input, Typography } from "antd";
 import { passwordRegex } from "@/utils";
 import "./index.css";
 import { useForm } from "antd/es/form/Form";
 import { SetStateAction, useEffect, useState } from "react";
 import GoogleIcon from "@/assets/google.svg";
+import { useGoogleLogin } from "@react-oauth/google";
+import {
+  useLoginMutation,
+  useOAuthLoginMutation,
+} from "@/redux/services/authentication";
+import { useNotificationContext } from "@/context/notificationContext";
+import { useNavigate } from "react-router";
+import CustomDivider from "../CustomDivider";
 type Props = {
   step: SetStateAction<number>;
   setStep: (value: SetStateAction<number>) => void;
@@ -14,23 +22,106 @@ const EmailCard: React.FC<Props> = ({ step, setStep }) => {
     userName: string;
     password: string;
   }>({ userName: "", password: "" });
+  const { openNotificationWithIcon, contextHolder } = useNotificationContext();
+  const [login, { data: loginData, error: loginError }] = useLoginMutation();
+  const [checkbox, setCheckbox] = useState(false);
+  const [oAuthLogin, { data: oAuthLoginData, error: oAuthError }] =
+    useOAuthLoginMutation();
+  const navigate = useNavigate();
   const [form] = useForm();
-  const handleEmailSubmit = (value: {userName: string}) => {
-    console.log(value);
+  const handleGooleLogin = useGoogleLogin({
+    onSuccess: async (tokenResponse) => await oAuthLogin(tokenResponse),
+    onError: (error) => console.log(error),
+  });
+
+  const handleEmailSubmit = (value: { userName: string }) => {
+    if (checkbox) {
+      localStorage.setItem("userCredentials", JSON.stringify(value));
+    }
     setLoginCreds({ ...loginCreds, userName: value.userName });
     setStep(Number(step) + 1);
   };
-  const handlePasswordSubmit = (value: { password: string }) => {
+  const handlePasswordSubmit = async (value: { password: string }) => {
+    if (checkbox) {
+      localStorage.setItem(
+        "userCredentials",
+        JSON.stringify({ ...loginCreds, password: value.password })
+      );
+    }
     setLoginCreds({
       ...loginCreds,
       password: value.password,
     });
+    await login({ email: loginCreds.userName, password: loginCreds.password });
   };
-    useEffect(() => {
-        if (loginCreds.userName) {
-            form.setFieldsValue({ userName: loginCreds.userName });
-        }
-    })
+
+  useEffect(() => {
+    if (oAuthLoginData) {
+      openNotificationWithIcon("success", {
+        message: "Login Success",
+        description: "You have successfully logged in",
+        duration: 1,
+        onClose: () => navigate("/dashboard"),
+      });
+    }
+    if (oAuthError) {
+      if ("data" in oAuthError) {
+        openNotificationWithIcon("error", {
+          message: "Login Failed",
+          description:
+            typeof oAuthError.data === "object" &&
+            oAuthError.data &&
+            "error_description" in oAuthError.data
+              ? (oAuthError.data as { error_description: string })
+                  .error_description
+              : "An unknown error occurred",
+        });
+      } else {
+        openNotificationWithIcon("error", {
+          message: "Login Failed",
+          description: "An unknown error occurred",
+        });
+      }
+    }
+  }, [oAuthLoginData, oAuthError]);
+
+  useEffect(() => {
+    if (loginData) {
+      openNotificationWithIcon("success", {
+        message: "Login Success",
+        description: "You have successfully logged in",
+        duration: 1,
+        onClose: () => navigate("/dashboard"),
+      });
+    }
+    if (loginError) {
+      if ("data" in loginError) {
+        openNotificationWithIcon("error", {
+          message: "Login Failed",
+          description:
+            typeof loginError.data === "object" &&
+            loginError.data &&
+            "error" in loginError.data
+              ? (loginError.data as { error: string }).error
+              : "An unknown error occurred",
+        });
+      } else {
+        openNotificationWithIcon("error", {
+          message: "Login Failed",
+          description: "An unknown error occurred",
+        });
+      }
+    }
+  }, [loginData, loginError]);
+
+  useEffect(() => {
+    const usersCreds = localStorage.getItem("userCredentials");
+    if (usersCreds) {
+      const { userName, password } = JSON.parse(usersCreds);
+      form.setFieldsValue({ userName, password });
+    }
+  }, []);
+
   return (
     <Flex
       vertical
@@ -38,7 +129,8 @@ const EmailCard: React.FC<Props> = ({ step, setStep }) => {
       gap={"1rem"}
       style={{ width: "100%" }}
     >
-      <p className="banner-txt">{"Enter your credentials"}</p>
+      {contextHolder}
+      <p className="banner-txt">{"Welcome back!"}</p>
       {step === 1 && (
         <Form
           layout="vertical"
@@ -65,7 +157,10 @@ const EmailCard: React.FC<Props> = ({ step, setStep }) => {
               />
             </Form.Item>
             <div>
-              <Checkbox name="rememberMe">
+              <Checkbox
+                name="rememberMe"
+                onChange={(e) => setCheckbox(e.target.checked)}
+              >
                 <p>Save my email address and login options</p>
               </Checkbox>
               <br />
@@ -88,6 +183,7 @@ const EmailCard: React.FC<Props> = ({ step, setStep }) => {
           className="login-card"
           form={form}
           onFinish={handlePasswordSubmit}
+          layout="vertical"
         >
           <Flex vertical justify="center" style={{ width: "100%" }}>
             <Typography.Text className="cred-txt">
@@ -106,6 +202,7 @@ const EmailCard: React.FC<Props> = ({ step, setStep }) => {
                 { required: true, message: "Please enter your password!" },
                 { pattern: passwordRegex, message: "Invalid password" },
               ]}
+              label={"Password"}
             >
               <Input.Password
                 style={{ height: "2.5rem" }}
@@ -125,15 +222,25 @@ const EmailCard: React.FC<Props> = ({ step, setStep }) => {
           </Flex>
         </Form>
       )}
-      <Divider />
+      <CustomDivider children={"or"} />
       <Flex gap={"0.5rem"} vertical>
-        <Button type="default" style={{height: '2.5rem'}}>
+        <Button
+          type="default"
+          style={{ height: "2.5rem" }}
+          onClick={() => handleGooleLogin()}
+        >
           <Flex gap={14} align="center" justify="center">
             <GoogleIcon />
-            {"Signup with Google"}
+            {"Continue with Google"}
           </Flex>
         </Button>
       </Flex>
+      <Typography.Text style={{ margin: "auto" }}>
+        Don't have an account?{" "}
+        <Typography.Link onClick={() => navigate("/signup")}>
+          Sign up
+        </Typography.Link>
+      </Typography.Text>
     </Flex>
   );
 };

@@ -1,14 +1,19 @@
 import { configureStore } from "@reduxjs/toolkit";
 import users from "./slices/Administration/users";
-import administrationService from "./services/Administration/index";
+import administrationService from "./services/Administration";
+import authenticationService from './services/authentication';
+import auth from './slices/authentication'
 
 const store = configureStore({
     reducer: {
-        users: users.reducer,
+        users: users,
+        auth: auth,
         [administrationService.reducerPath]: administrationService.reducer,
+        [authenticationService.reducerPath]: authenticationService.reducer,
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(
-        administrationService.middleware
+        administrationService.middleware,
+        authenticationService.middleware
     ),
 });
 
