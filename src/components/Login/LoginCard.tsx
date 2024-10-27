@@ -1,8 +1,8 @@
 import { Button, Checkbox, Flex, Form, Input, Typography } from "antd";
-import { passwordRegex } from "@/utils";
+import { passwordRegex, storeToken } from "@/utils";
 import "./index.css";
 import { useForm } from "antd/es/form/Form";
-import { SetStateAction, useEffect, useState } from "react";
+import { SetStateAction, useEffect, useState,} from "react";
 import GoogleIcon from "@/assets/google.svg";
 import { useGoogleLogin } from "@react-oauth/google";
 import {
@@ -23,14 +23,21 @@ const EmailCard: React.FC<Props> = ({ step, setStep }) => {
     password: string;
   }>({ userName: "", password: "" });
   const { openNotificationWithIcon, contextHolder } = useNotificationContext();
-  const [login, { data: loginData, error: loginError }] = useLoginMutation();
+  const [login, { error: loginError, isLoading:loginLoading }] = useLoginMutation();
+  
   const [checkbox, setCheckbox] = useState(false);
-  const [oAuthLogin, { data: oAuthLoginData, error: oAuthError }] =
+  const [oAuthLogin, { error: oAuthError }] =
     useOAuthLoginMutation();
   const navigate = useNavigate();
   const [form] = useForm();
   const handleGooleLogin = useGoogleLogin({
-    onSuccess: async (tokenResponse) => await oAuthLogin(tokenResponse),
+    onSuccess: async (tokenResponse) => {
+      const res = await oAuthLogin(tokenResponse)
+      if (res.data) {
+        storeToken(res.data.token);
+        navigate("/dashboard");
+      }
+    },
     onError: (error) => console.log(error),
   });
 
@@ -52,18 +59,14 @@ const EmailCard: React.FC<Props> = ({ step, setStep }) => {
       ...loginCreds,
       password: value.password,
     });
-    await login({ email: loginCreds.userName, password: loginCreds.password });
+    const res = await login({ email: loginCreds.userName, password: value.password });
+    if (res.data) {
+      storeToken(res.data.token);
+      navigate("/dashboard");
+    }
   };
 
   useEffect(() => {
-    if (oAuthLoginData) {
-      openNotificationWithIcon("success", {
-        message: "Login Success",
-        description: "You have successfully logged in",
-        duration: 1,
-        onClose: () => navigate("/dashboard"),
-      });
-    }
     if (oAuthError) {
       if ("data" in oAuthError) {
         openNotificationWithIcon("error", {
@@ -83,17 +86,9 @@ const EmailCard: React.FC<Props> = ({ step, setStep }) => {
         });
       }
     }
-  }, [oAuthLoginData, oAuthError]);
+  }, [, oAuthError]);
 
   useEffect(() => {
-    if (loginData) {
-      openNotificationWithIcon("success", {
-        message: "Login Success",
-        description: "You have successfully logged in",
-        duration: 1,
-        onClose: () => navigate("/dashboard"),
-      });
-    }
     if (loginError) {
       if ("data" in loginError) {
         openNotificationWithIcon("error", {
@@ -112,7 +107,7 @@ const EmailCard: React.FC<Props> = ({ step, setStep }) => {
         });
       }
     }
-  }, [loginData, loginError]);
+  }, [, loginError]);
 
   useEffect(() => {
     const usersCreds = localStorage.getItem("userCredentials");
@@ -129,7 +124,7 @@ const EmailCard: React.FC<Props> = ({ step, setStep }) => {
       gap={"1rem"}
       style={{ width: "100%" }}
     >
-      {contextHolder}
+      {/* {contextHolder} */}
       <p className="banner-txt">{"Welcome back!"}</p>
       {step === 1 && (
         <Form
@@ -213,6 +208,7 @@ const EmailCard: React.FC<Props> = ({ step, setStep }) => {
               style={{ height: "2.5rem", marginTop: "0.5rem" }}
               type="primary"
               htmlType="submit"
+              loading={loginLoading}
             >
               Login
             </Button>

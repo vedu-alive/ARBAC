@@ -1,4 +1,4 @@
-import { Avatar, Button, Dropdown, Flex, MenuProps, Skeleton, Space, Table, Tooltip } from "antd";
+import { Avatar, Dropdown, Flex, MenuProps, Skeleton, Space, Table, Tooltip } from "antd";
 import UserHeader from "./UserHeader";
 import { ColumnType } from "antd/es/table";
 import { useState } from "react";
@@ -162,7 +162,7 @@ const handleDropdownChange: MenuProps["onClick"] = (e) => {
 
 const UsersTab = () => {
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-  const { data: TableData, isLoading } = useGetUsersQuery('usersTab');
+  const { data: TableData, isLoading } = useGetUsersQuery({retry:3});
   const { contextHolder } = useNotificationContext();
   const columns: ColumnType<userTableType>[] = [
     {

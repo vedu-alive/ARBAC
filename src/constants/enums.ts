@@ -27,3 +27,22 @@ export enum Apps {
     github = "github",
 
 }
+
+export enum globalConstants {
+    token = "RBAC_access_token",
+}
+
+export enum paths {
+    home = "/",
+    dashboard = "/dashboard",
+    settings = "/settings",
+    login = "/login",
+    signup = "/signup",
+    appManagement = "/app-management",
+    policyManagement = "/policy-management",
+    identityProviders = "/identity-providers",
+    credentialsReports = "/credentials-reports",
+    identityGovernance = "/identity-governance",
+    roleAdministration = "/role-administration",
+    newUser = "new-user",
+}

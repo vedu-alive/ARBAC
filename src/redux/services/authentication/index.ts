@@ -1,3 +1,4 @@
+import { globalConstants } from '@/constants/enums';
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react' 
 const authenticationService = createApi({
   reducerPath: "authenticationService",
@@ -28,6 +29,10 @@ const authenticationService = createApi({
         method: "POST",
       }),
       invalidatesTags: ["Authentication"],
+      onQueryStarted(_arg, _api) {
+        localStorage.removeItem(globalConstants.token);
+        window.location.href = "/login";
+      },
     }),
     oAuthLogin: builder.mutation({
       query: (credentials) => ({

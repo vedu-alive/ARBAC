@@ -5,37 +5,39 @@ import RolesAdmin from "@/views/Roles&Admin/Roles&Admin";
 import NewUser from "@/views/NewUser/NewUser";
 import Login from "@/components/Login";
 import Signup from "@/components/Signup";
+import Settings from "@/views/Settings/Settings";
+import { paths } from "@/constants/enums";
 
 const Router = () => {
   return (
     <BrowserRouter >
       <Routes>
-        <Route path="login" element={<Login />} />
-        <Route path="signup" element={<Signup />} />
-        <Route path="/" element={<Layout />}>
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/role-administration" element={<Outlet />}>
+        <Route path={paths.login} element={<Login />} />
+        <Route path={paths.signup} element={<Signup />} />
+        <Route path={paths.home} element={<Layout />}>
+          <Route path={paths.dashboard} element={<Dashboard />} />
+          <Route path={paths.roleAdministration} element={<Outlet />}>
             <Route index element={<RolesAdmin />} />
-            <Route path="new-user" element={<NewUser />} />
+            <Route path={paths.newUser} element={<NewUser />} />
           </Route>
-          <Route path="app-management" element={<div>App Management</div>} />
+          <Route path={paths.appManagement} element={<div>App Management</div>} />
           <Route
-            path="policy-management"
+            path={paths.policyManagement}
             element={<div>Policy Management</div>}
           />
           <Route
-            path="identity-providers"
+            path={paths.identityProviders}
             element={<div>Identity Providers</div>}
           />
           <Route
-            path="credentials-reports"
+            path={paths.credentialsReports}
             element={<div>Credentials Reports</div>}
           />
           <Route
-            path="identity-governance"
+            path={paths.identityGovernance}
             element={<div>Identity Governance</div>}
           />
-          <Route path="settings" element={<div>Settings</div>} />
+          <Route path={paths.settings} element={<Settings/>} />
           <Route path="*" element={<div>Not Found</div>} />
         </Route>
       </Routes>

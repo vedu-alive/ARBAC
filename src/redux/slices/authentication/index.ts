@@ -1,3 +1,4 @@
+import { removeToken } from "@/utils";
 import { createSlice } from "@reduxjs/toolkit";
 
 const auth = createSlice({
@@ -14,12 +15,13 @@ const auth = createSlice({
         setRefreshToken: (state, action) => {
             state.refreshToken = action.payload;
         },
-        reset: (state) => {
+        resetToken: (state) => {
             state.token = null;
             state.refreshToken = null;
+            removeToken();
         },
     },
 });
 
-export const { setToken, setRefreshToken, reset } = auth.actions;
+export const { setToken, setRefreshToken,resetToken } = auth.actions;
 export default auth.reducer;

@@ -1,3 +1,4 @@
+import { globalConstants } from "@/constants/enums";
 import { SelectedAppTableData } from "@/types";
 
 export const debounce = (fn: (...args: any[]) => void, delay: number | undefined) => {
@@ -35,7 +36,20 @@ export const getRandomColor=()=> {
   return color;
 }
 
+export const storeToken = (token: string) => {
+  localStorage.setItem(globalConstants.token, token);
+}
 
+export const removeToken = () => {
+  localStorage.removeItem(globalConstants.token);
+  window.history.replaceState(null, '', "/login");
+  window.location.replace("/login");
+}
+
+export const checkToken = () => {
+    if (localStorage.getItem(globalConstants.token)) return true;
+    return false;
+}
 
 //* Link for dark theme
 //* https://chatgpt.com/share/6707b0aa-1e58-8008-9ae4-7643e9ff1bec

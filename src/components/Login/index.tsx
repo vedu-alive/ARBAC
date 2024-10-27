@@ -1,12 +1,17 @@
 import { Flex } from 'antd'
 import './index.css'
 import EmailCard from './LoginCard'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { WelcomeText } from './loginbanner'
-type Props = {}
+import { useNavigate } from 'react-router-dom'
+import { checkToken } from '@/utils'
 
-const index = (props: Props) => {
+const index = () => {
   const [step, setStep] = useState(1);
+  const navigate = useNavigate();
+  useEffect(() => {
+    checkToken() && navigate("/dashboard", { replace: true });
+  }, []);
   return (
     <Flex vertical align="center" justify="center" className="login">
       <WelcomeText />

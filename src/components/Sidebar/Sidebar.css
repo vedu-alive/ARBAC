@@ -5,7 +5,7 @@
     gap: 2px;
 }
 .productName p span{
-    color: #109CF1;
+    color: var(--text-blue);
 }
 .productName{
     height: 3.75rem;
@@ -13,7 +13,7 @@
     align-items: center;
     padding: 0 1rem;
     gap: 0.25rem;
-    background: var(--Secondary-White, #FFF);
+    background: var(--bg-white, #FFF);
     color: #334D6E;
     font-family: Open Sans;
     font-size: 1.25rem;
@@ -25,7 +25,7 @@
     display: flex;
     align-items: center;
     gap: 1rem;
-    background: var(--Secondary-White, #FFF);
+    background: var(--bg-white, #FFF);
     padding: 1rem 1.5rem ;
 }
 .administartor-data{ display: flex;flex-direction: column;gap: 0.12rem;}
@@ -63,7 +63,7 @@
     letter-spacing: 0.00688rem;
 }
 .nav-options{
-    background: var(--Secondary-White, #FFF);
+    background: var(--bg-white, #FFF);
     padding: 1rem 0;
     display: flex;
     flex-direction: column;

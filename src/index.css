@@ -12,9 +12,13 @@ body {
 :root {
   --bg-color: #f5f6f8;
   --text-color: #000;
+  --bg-white: #fff;
+  --text-blue: #109CF1;
+  --shadow-blue: #c1e2f6;
 }
 
 .dark-theme {
   --bg-color: #333;
   --text-color: #fff;
+  --bg-white: #111;
 }
